@@ -2,9 +2,36 @@ GET http://localhost:8080/test
 
 ###
 
-POST http://localhost:8080/test/2 HTTP/1.1
+POST http://localhost:8080/test/2
 Content-Type: application/json
 
 { 
     "test": "bar" 
 }
+
+### 
+
+OPTIONS http://localhost:8080/test/2
+
+
+### 
+POST https://docent.cmi.hro.nl/bootb/demo/notes/
+Content-Type: application/json
+
+{
+    "title": "testjojojojjooooo",
+    "body": "Lucas was here",
+    "author": "lucas"
+}
+
+
+### 
+GET https://docent.cmi.hro.nl/bootb/demo/notes/20844
+
+###
+
+GET https://docent.cmi.hro.nl/bootb/demo/notes/
+
+
+###
+OPTIONS https://docent.cmi.hro.nl/bootb/demo/notes/

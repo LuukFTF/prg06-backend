@@ -24,6 +24,6 @@ app.post('/test/:id', (req, res) => {
     }
 
     res.send({
-        foo: `jo je id is ${id} en de testwaarde is ${test}`,
+        foo: `jo, je id is ${id} en de testwaarde is ${test}`,
     });
 });
