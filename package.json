@@ -2,5 +2,25 @@
   "dependencies": {
     "express": "^4.17.1",
     "node": "^17.1.0"
-  }
+  },
+  "name": "prg06-backend",
+  "description": "",
+  "version": "0.3.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuukFTF/prg06-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LuukFTF/prg06-backend/issues"
+  },
+  "homepage": "https://github.com/LuukFTF/prg06-backend#readme"
 }
