@@ -1,8 +1,8 @@
-GET http://localhost:8080/test
+GET http://145.24.222.193:8000/test
 
 ###
 
-POST http://localhost:8080/test/2
+POST http://145.24.222.193:8000/test/2
 Content-Type: application/json
 
 { 
@@ -11,7 +11,7 @@ Content-Type: application/json
 
 ### 
 
-OPTIONS http://localhost:8080/test/2
+GET https://docent.cmi.hro.nl/bootb/demo/notes/
 
 
 ### 
@@ -19,19 +19,19 @@ POST https://docent.cmi.hro.nl/bootb/demo/notes/
 Content-Type: application/json
 
 {
-    "title": "testjojojojjooooo",
-    "body": "Lucas was here",
+    "title": "maarten is stom",
+    "body": "hehe",
     "author": "lucas"
 }
 
 
 ### 
-GET https://docent.cmi.hro.nl/bootb/demo/notes/20844
+OPTIONS https://docent.cmi.hro.nl/bootb/demo/notes/20848
 
 ###
 
-GET https://docent.cmi.hro.nl/bootb/demo/notes/
+GET https://docent.cmi.hro.nl/bootb/demo/notes/20848
 
 
 ###
-OPTIONS https://docent.cmi.hro.nl/bootb/demo/notes/
+GET https://google.com
