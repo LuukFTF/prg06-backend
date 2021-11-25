@@ -35,3 +35,6 @@ GET https://docent.cmi.hro.nl/bootb/demo/notes/20847
 
 ###
 GET https://google.com
+
+###
+GET https://wttr.in

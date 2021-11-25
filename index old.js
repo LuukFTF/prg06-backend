@@ -1,15 +1,15 @@
-console.log("Started server");
+const express = require('express');
+const app = express();
+const PORT = 8000;
 
-const express = require("express");
-const { appendFile } = require("fs");
+app.listen(
+    PORT,
+    () => console.log(`hij leeft op http://localhost:${PORT}`)
+)
 
-const mongoose = require("mongoose");
-mongoose.connect('mongodb://localhost/songs')
+app.use( express.json() )
 
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-
-app.get("/", (req, res) => {
+app.get('/test', (req, res) => {
     res.status(200).send({
         foo: 'bruh'
     })
