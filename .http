@@ -38,7 +38,7 @@ GET https://google.com
 GET https://wttr.in
 
 ###
-GET http://localhost:8000/songs/
+GET http://145.24.222.193:8000/songs/
 
 
 ###
@@ -49,21 +49,12 @@ DELETE http://localhost:8000/songs/61a16a91b1dc4a8ca2a10afe
 
 
 ###
-POST http://localhost:8000/songs
+POST http://145.24.222.193:8000/songs
 Content-Type: application/json
 
 {
-    "title": "sadaasdasdsd",
-    "author": "luasdaasdsadsdasduk"
-}
-
-###
-POST http://localhost:8000/songs
-Content-Type: application/json
-
-{
-    "title": "sadaasdasdsd",
-    "author": "luasdaasdsadsdasduk"
+    "title": "hoi dani",
+    "author": "lucas"
 }
 
 ###
@@ -86,3 +77,6 @@ Content-Type: application/json
     "name": "hi",
     "subscribedToChannel": "lollmao"
 }
+
+###
+OPTIONS 145.24.222.193
