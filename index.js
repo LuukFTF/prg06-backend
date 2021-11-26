@@ -1,29 +1,18 @@
-console.log("Started server");
+require('dotenv').config()
 
-const express = require("express");
-const { appendFile } = require("fs");
+const express = require('express');
+const app = express();
+const mongoose = require('mongoose');
 
-const mongoose = require("mongoose");
-mongoose.connect('mongodb://localhost/songs')
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true})
 
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+const db = mongoose.connection
+db.on('error', (error) => console.erroro(error))
+db.once('open', () => console.log('Connected to Database'))
 
-app.get("/", (req, res) => {
-    res.status(200).send({
-        foo: 'bruh'
-    })
-});
+app.use(express.json())
 
-app.post('/test/:id', (req, res) => {
-    const { id } = req.params;
-    const { test } = req.body;
+const songsRouter = require('./routes/songsRoutes')
+app.use('/songs', songsRouter)
 
-    if (!test) {
-        res.status(418).send({ message: `We hebbe een testwaarde nodig, nu ist ${id} & ${test}` })
-    }
-
-    res.send({
-        foo: `jo, je id is ${id} en de testwaarde is ${test}`,
-    });
-});
+app.listen(process.env.PORT, () => console.log(`Server Started on port ${process.env.PORT}`))

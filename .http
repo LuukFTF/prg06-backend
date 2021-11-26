@@ -1,7 +1,6 @@
 GET http://145.24.222.193:8000/test
 
 ###
-
 POST http://145.24.222.193:8000/test/2
 Content-Type: application/json
 
@@ -10,7 +9,6 @@ Content-Type: application/json
 }
 
 ### 
-
 GET https://docent.cmi.hro.nl/bootb/demo/notes/
 
 
@@ -38,3 +36,53 @@ GET https://google.com
 
 ###
 GET https://wttr.in
+
+###
+GET http://localhost:8000/songs/
+
+
+###
+GET http://localhost:8000/songs/61a16a91b1dc4a8ca2a10afe
+
+###
+DELETE http://localhost:8000/songs/61a16a91b1dc4a8ca2a10afe
+
+
+###
+POST http://localhost:8000/songs
+Content-Type: application/json
+
+{
+    "title": "sadaasdasdsd",
+    "author": "luasdaasdsadsdasduk"
+}
+
+###
+POST http://localhost:8000/songs
+Content-Type: application/json
+
+{
+    "title": "sadaasdasdsd",
+    "author": "luasdaasdsadsdasduk"
+}
+
+###
+PATCH http://localhost:8000/songs/61a16a91b1dc4a8ca2a10afe
+Content-Type: application/json
+
+{
+    "author": "dikke bruh"
+}
+
+### 
+GET http://localhost:3000/subscribers/61a169c57532dc06c07fe2b7
+
+
+###
+POST http://localhost:3000/subscribers
+Content-Type: application/json
+
+{
+    "name": "hi",
+    "subscribedToChannel": "lollmao"
+}
