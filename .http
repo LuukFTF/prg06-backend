@@ -37,8 +37,13 @@ GET https://google.com
 ###
 GET https://wttr.in
 
+
+
+
+
+
 ###
-GET http://145.24.222.193:8000/songs/
+GET http://localhost:8000/songs/
 
 
 ###
@@ -65,18 +70,6 @@ Content-Type: application/json
     "author": "dikke bruh"
 }
 
+
 ### 
-GET http://localhost:3000/subscribers/61a169c57532dc06c07fe2b7
-
-
-###
-POST http://localhost:3000/subscribers
-Content-Type: application/json
-
-{
-    "name": "hi",
-    "subscribedToChannel": "lollmao"
-}
-
-###
-OPTIONS 145.24.222.193
+GET http://localhost:8000/ping
