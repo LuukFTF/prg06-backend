@@ -78,7 +78,7 @@ module.exports = router
 
 //     songsRouter.route("/song")
 
-//     .get( (req, res) => {
+//     .get('/', async (req, res) => {
 //         let songs = Song.find({}, (err, songs) => {
 //             if (err) {
 //                 res.status(500);

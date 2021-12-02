@@ -3,7 +3,9 @@ require('dotenv').config()
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const songsRouter = require('./routes/songsRoutes')
 
+// Mondodb connection
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true})
 
 const db = mongoose.connection
@@ -12,8 +14,8 @@ db.once('open', () => console.log('Connected to Database'))
 
 app.use(express.json())
 
-const songsRouter = require('./routes/songsRoutes')
-app.use('/songs', songsRouter)
+// Middleware
+app.use('/', songsRouter);
 
 app.get('/ping', (req, res) => {
     try {
@@ -23,4 +25,5 @@ app.get('/ping', (req, res) => {
     }
 });
 
+// Start Port Listening
 app.listen(process.env.PORT, () => console.log(`Server Started on port ${process.env.PORT}`))

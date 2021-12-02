@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+// Song Model
 const Song = new Schema({
     title: {
         type: String,
@@ -20,4 +21,5 @@ const Song = new Schema({
     }
 })
 
+// Export Module
 module.exports = mongoose.model('Songs', Song)

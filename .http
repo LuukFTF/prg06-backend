@@ -1,4 +1,7 @@
-GET http://145.24.222.193:8000/songs
+GET http://localhost:3000/songs
+
+###
+GET http://localhost:3000/ping
 
 ###
 POST http://145.24.222.193:8000/test/2
