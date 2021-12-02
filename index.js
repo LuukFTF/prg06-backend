@@ -14,9 +14,6 @@ db.once('open', () => console.log('Connected to Database'))
 
 app.use(express.json())
 
-// Middleware
-app.use('/', songsRouter);
-
 app.get('/ping', (req, res) => {
     try {
         res.status(200).json({ message: "pong!"})
@@ -24,6 +21,13 @@ app.get('/ping', (req, res) => {
         res.status(500).json({ message: err.message})
     }
 });
+
+
+// Middleware
+app.use('/songs', songsRouter);
+
+
+
 
 // Start Port Listening
 app.listen(process.env.PORT, () => console.log(`Server Started on port ${process.env.PORT}`))
