@@ -2,28 +2,21 @@ const express = require('express');
 const router = express.Router();
 const Song = require('../models/songModel');
 
-
-let routes = () => {
-    let songsRouter = express.Router();
-
-    songsRouter.route("/songs")
-
-
-.get('/', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const songs = await Song.find()
         res.json(songs)
     } catch (err) {
         res.status(500).json({ message: err.message})
     }
-})
+});
 
-.get('/:id', getSong, (req, res) => {
+router.get('/:id', getSong, (req, res) => {
     res.json(res.song)
-})
+});
 
 
-.post('/', async (req, res) => {
+router.post('/', async (req, res) => {
     const song = new Song({
         title: req.body.title,
         author: req.body.author,
@@ -36,9 +29,9 @@ let routes = () => {
     } catch (err) {
         res.status(400).json({ message: err.message})
     }
-})
+});
 
-.patch('/:id', getSong, async (req, res) => {
+router.patch('/:id', getSong, async (req, res) => {
     if (req.body.title != null) {
         res.song.title = req.body.title
     }
@@ -51,18 +44,16 @@ let routes = () => {
     } catch (err) {
         res.status(400).json({ message: err.message })
     }
-})
+});
 
-.delete('/:id', getSong, async (req, res) => {
+router.delete('/:id', getSong, async (req, res) => {
     try {
         await res.song.remove()
         res.status(200).json({ message: 'Deleted Song'})
     } catch (err) {
         res.status(500).json({ message: err.message})
     }
-})
-
-}
+});
 
 async function getSong(req, res, next) {
     let song
@@ -96,11 +87,4 @@ module.exports = router
 //             }
 //         });
 //     });
-// }
-
-
-// let routes = () => {
-//     let songsRouter = express.Router();
-
-//     songsRouter.route("/song")
 // }
