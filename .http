@@ -1,11 +1,11 @@
 
-GET http://localhost:8000/songs
+GET http://localhost:8000/songs/
 
 ###
 GET http://localhost:8000/ping
 
 ###
-POST http://145.24.222.193:8000/test/2
+POST http://localhost:8000/songs/
 Content-Type: application/json
 
 { 
@@ -22,7 +22,7 @@ Content-Type: application/json
 
 {
     "title": "maarten is stom",
-    "body": "hehe",
+    "body": "hehehe",
     "author": "lucas"
 }
 
@@ -58,7 +58,7 @@ DELETE http://localhost:8000/songs/61a16a91b1dc4a8ca2a10afe
 
 
 ###
-POST http://145.24.222.193:8000/songs
+POST http://localhost:8000/songs
 Content-Type: application/json
 
 {
