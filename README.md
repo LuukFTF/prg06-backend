@@ -6,9 +6,16 @@ https://stud.hosted.hr.nl/0987896/webservice.json
 
 ```json
 {  
-    "uri":"145.24.222.193:8000", 
-    "uitleg": "lucas song api versie 0.1"  
+    "uri": "http://145.24.222.193:8000/songs/", 
+    "uitleg": "lucas van der vegts song api versie 0.1"  
 } 
+```
+
+```json
+{
+    "uri": "https://stud.hosted.hr.nl/0987896/webservice.json",
+    "fields": [title, author, inRepertoireSince]
+}
 ```
 
 ## General Design

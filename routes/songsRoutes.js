@@ -99,6 +99,7 @@ router
 
 .options('/',  (req, res) => {
     try {
+        res.header("Allow", "GET, POST, OPTIONS")
         res.json(["GET", "POST", "OPTIONS"])
     } catch (err) {
         res.status(500).json({ message: err.message })
@@ -108,7 +109,8 @@ router
 // Song Detail View
 .options('/:id', (req, res) => {
     try {
-        res.json(["GET", "PATCH", "DELETE", "OPTIONS"])
+        res.header("GET, PUT, DELETE, OPTIONS")
+        res.json(["GET", "PUT", "DELETE", "OPTIONS"])
     } catch (err) {
         res.status(500).json({ message: err.message })
     }

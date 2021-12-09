@@ -1,69 +1,29 @@
 
-GET /songs HTTP/1.1
+GET /ping
+Host: localhost:8000
+
+
+###
+OPTIONS /songs
 Host: localhost:8000
 
 ###
-GET /ping HTTP/1.1
+OPTIONS /songs/61a16a91b1dc4a8ca2a10afe
+Host: localhost:8000
+
+
+###
+GET /songs
 Host: localhost:8000
 
 ###
-
-GET /songs/61a16a91b1dc4a8ca2a10afe HTTP/1.1
+GET /songs/61a16a91b1dc4a8ca2a10afe
 Host: localhost:8000
 
-###
-POST http://localhost:8000/songs/
-Content-Type: application/json
-
-{ 
-    "test": "bar" 
-}
-
-### 
-GET https://docent.cmi.hro.nl/bootb/demo/notes/
-
-
-### 
-POST https://docent.cmi.hro.nl/bootb/demo/notes/
-Content-Type: application/json
-
-{
-    "title": "maarten is stom",
-    "body": "hehehe",
-    "author": "lucas"
-}
-
-
-### 
-OPTIONS https://docent.cmi.hro.nl/bootb/demo/notes
 
 ###
-
-GET https://docent.cmi.hro.nl/bootb/demo/notes/20847
-
-
-###
-GET https://google.com
-
-###
-GET https://wttr.in
-
-
-
-
-
-
-###
-GET http://localhost:8000/songs/
-
-
-###
-###
-DELETE http://localhost:8000/songs/61a16a91b1dc4a8ca2a10afe
-
-
-###
-POST http://145.24.222.193:8000/songs
+POST /songs
+Host: localhost:8000
 Content-Type: application/json
 
 {
@@ -71,15 +31,3 @@ Content-Type: application/json
     "author": "Young the Giant",
     "inRepertoireSince": "2020"
 }
-
-###
-PATCH http://localhost:8000/songs/61a16a91b1dc4a8ca2a10afe
-Content-Type: application/json
-
-{
-    "author": "dikke bruh"
-}
-
-
-### 
-GET http://localhost:8000/ping
