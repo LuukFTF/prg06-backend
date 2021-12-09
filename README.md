@@ -2,6 +2,14 @@
 
 ## Checker
 
+https://stud.hosted.hr.nl/0987896/webservice.json
+
+```json
+{  
+    "uri":"145.24.222.193:8000", 
+    "uitleg": "lucas song api versie 0.1"  
+} 
+```
 
 ## General Design
 
@@ -81,7 +89,7 @@ Content-Type: application/json
 ### PING
 
 ```json
-GET /ping
+GET /ping HTTP/1.1
 Accept: application/json
 ```
 
@@ -101,7 +109,7 @@ Content-Type: application/json
 ### GET overview
 
 ```json
-GET /songs
+GET /songs HTTP/1.1
 Accept: application/json
 ```
 
@@ -169,7 +177,7 @@ Content-Type: application/json
 ### GET detail
 
 ```json
-GET /songs/:id
+GET /songs/:id HTTP/1.1
 Accept: application/json
 ```
 
@@ -194,7 +202,7 @@ Content-Type: application/json
 ### POST
 
 ```json
-POST /songs
+POST /songs HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 
@@ -227,14 +235,14 @@ Content-Type: application/json
 ### PUT
 
 ```json
-POST /songs/:id
+POST /songs/:id HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 
 {
     "title": "Blitzkrieg Bop",
     "author": "Ramones",
-    "inRepertoireSince": "2022",
+    "inRepertoireSince": "2022"
 }
 ```
 
@@ -260,7 +268,7 @@ Content-Type: application/json
 ### DELETE 
 
 ```json
-POST /songs/:id
+POST /songs/:id HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 
@@ -281,7 +289,7 @@ Content-Type: application/json
 ### OPTIONS 
 
 ```json
-OPTIONS /songs/:id
+OPTIONS /songs/:id HTTP/1.1
 Accept: application/json
 
 ```
@@ -304,7 +312,7 @@ Access-Control-Allow-Methods: GET,POST,OPTIONS
 ### OPTIONS :id
 
 ```json
-OPTIONS /songs/:id
+OPTIONS /songs/:id HTTP/1.1
 Accept: application/json
 
 ```

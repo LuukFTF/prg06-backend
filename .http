@@ -1,13 +1,15 @@
 
-GET  http://localhost:8000/songs/
+GET /songs HTTP/1.1
+Host: localhost:8000
 
 ###
-GET http://localhost:8000/ping
+GET /ping HTTP/1.1
+Host: localhost:8000
 
 ###
 
-GET http://localhost:8000/songs/61a16a91b1dc4a8ca2a10afe
-
+GET /songs/61a16a91b1dc4a8ca2a10afe HTTP/1.1
+Host: localhost:8000
 
 ###
 POST http://localhost:8000/songs/
@@ -61,12 +63,13 @@ DELETE http://localhost:8000/songs/61a16a91b1dc4a8ca2a10afe
 
 
 ###
-POST http://localhost:8000/songs
+POST http://145.24.222.193:8000/songs
 Content-Type: application/json
 
 {
-    "title": "hoi dani",
-    "author": "lucas"
+    "title": "Apartment",
+    "author": "Young the Giant",
+    "inRepertoireSince": "2020"
 }
 
 ###

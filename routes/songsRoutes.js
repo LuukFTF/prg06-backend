@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const { notEqual } = require('assert');
 const express = require('express');
 const router = express.Router();
@@ -15,8 +17,8 @@ router
         let songsCollection = {
             "items": [],
             "_links": {
-                "self": { "href": "http://localhost:8000/songs/" },
-                "collection": { "href": "http://localhost:8000/songs/" }
+                "self": { "href": "http://" + req.headers.host + "/songs/" },
+                "collection": { "href": "http://" + req.headers.host + "/songs/" }
             },
             "pagination": { 
                 "message": "wip" 
@@ -27,8 +29,8 @@ router
             let songItem = song.toJSON()
 
             songItem._links = {
-                "self": { "href": "http://localhost:8000/songs/" + songItem._id },
-                "collection": { "href": "http://localhost:8000/songs/" }
+                "self": { "href": "http://" + req.headers.host + "/songs/" + songItem._id },
+                "collection": { "href": "http://" + req.headers.host + "/songs/" }
             },
 
             songsCollection.items.push(songItem)

@@ -1,4 +1,4 @@
 {  
-    "uri":"145.24.222.193:8000", 
-    "uitleg": "test service"  
+    "uri": "http://145.24.222.193:8000/songs/", 
+    "uitleg": "lucas song api versie 0.1"  
 } 
