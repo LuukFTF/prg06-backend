@@ -6,19 +6,22 @@ Host: localhost:8000
 ###
 OPTIONS /songs
 Host: localhost:8000
+Content-Type: application/json
 
 ###
 OPTIONS /songs/61a16a91b1dc4a8ca2a10afe
 Host: localhost:8000
-
+Content-Type: application/json
 
 ###
 GET /songs
 Host: localhost:8000
+Content-Type: application/json
 
 ###
 GET /songs/61a16a91b1dc4a8ca2a10afe
 Host: localhost:8000
+Content-Type: application/json
 
 
 ###

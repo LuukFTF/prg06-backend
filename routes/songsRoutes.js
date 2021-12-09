@@ -9,6 +9,23 @@ console.log("test")
 
 // Song Routes
 router
+
+.use('/', (req, res, next) => {
+    try {
+        console.log("middleware collectie")
+        let contentType = req.get("Content-Type")
+        console.log("Content-Type: " + contentType)
+
+        if (contentType == "application/json") {
+            next()
+        } else {
+            res.status(400).json({ message: "content type '" + contentType + "' not allowed, only allowed accept: 'application/json'" })
+        }
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+})
+
 // Songs Collection View
 .get('/', async (req, res) => {
     try {
