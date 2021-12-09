@@ -1,8 +1,13 @@
 
-GET http://localhost:8000/songs/
+GET  http://localhost:8000/songs/
 
 ###
 GET http://localhost:8000/ping
+
+###
+
+GET http://localhost:8000/songs/61a16a91b1dc4a8ca2a10afe
+
 
 ###
 POST http://localhost:8000/songs/
@@ -51,8 +56,6 @@ GET http://localhost:8000/songs/
 
 
 ###
-GET http://localhost:8000/songs/61a16a91b1dc4a8ca2a10afe
-
 ###
 DELETE http://localhost:8000/songs/61a16a91b1dc4a8ca2a10afe
 

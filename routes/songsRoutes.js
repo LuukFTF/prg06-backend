@@ -1,3 +1,4 @@
+const { notEqual } = require('assert');
 const express = require('express');
 const router = express.Router();
 const Song = require('../models/songModel');
@@ -10,7 +11,30 @@ router
 .get('/', async (req, res) => {
     try {
         const songs = await Song.find()
-        res.json(songs)
+
+        let songsCollection = {
+            "items": [],
+            "_links": {
+                "self": { "href": "http://localhost:8000/songs/" },
+                "collection": { "href": "http://localhost:8000/songs/" }
+            },
+            "pagination": { 
+                "message": "wip" 
+            }
+        }
+
+        for(let song of songs) {
+            let songItem = song.toJSON()
+
+            songItem._links = {
+                "self": { "href": "http://localhost:8000/songs/" + songItem._id },
+                "collection": { "href": "http://localhost:8000/songs/" }
+            },
+
+            songsCollection.items.push(songItem)
+        }
+
+        res.json(songsCollection)
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
@@ -18,8 +42,13 @@ router
 
 // Song Detail View
 .get('/:id', getSong, (req, res) => {
-    res.json(res.song)
+    try {
+        res.json(res.song)
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
 })
+
 
 
 // New Song
@@ -58,11 +87,31 @@ router
 .delete('/:id', getSong, async (req, res) => {
     try {
         await res.song.remove()
-        res.status(200).json({ message: 'Deleted Song'})
+        res.status(204).json({ message: 'Deleted Song'})
     } catch (err) {
         res.status(500).json({ message: err.message})
     }
+})
+
+// Options
+
+.options('/',  (req, res) => {
+    try {
+        res.json(["GET", "POST", "OPTIONS"])
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+})
+
+// Song Detail View
+.options('/:id', (req, res) => {
+    try {
+        res.json(["GET", "PATCH", "DELETE", "OPTIONS"])
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
 });
+
 
 
 // Functions

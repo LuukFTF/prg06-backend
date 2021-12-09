@@ -3,9 +3,9 @@
 
 ## General Design
 
-content
-pagination
-links
+- content
+- pagination
+- links
 
 ```json
 {
@@ -19,21 +19,19 @@ links
                 "collection": { "href": "http://host/songs/" }
             }
         }, 
-        { 
-            "": "", 
-        }   
-    ],
-    "item": {
+        {
             "id": "6",
             "title": "lorem",
             "body": "lorem",
             "_links": {
                 "self": { "href": "http://host/items/6" },
                 "collection": { "href": "http://host/items/" }
-            },   
-
+            },    
+    ],
     "links": {
-        "self": "http://host/items/?start=5&limit=2"
+        "self": { "href": "http://host/items/?start=5&limit=2" },
+        "collection": { "href": "http://host/items/" }
+        
     },
 
     "pagination": {
@@ -70,7 +68,7 @@ links
 response type: message
 
 ```json
-HTTP/1.1 200 OK
+HTTP/1.1 4xx/5xx ERROR
 Content-Type: application/json
 
 { 
@@ -136,7 +134,8 @@ Content-Type: application/json
         }
     ],
     "_links": {
-        "self": { "href": "http://host/songs/?start=5&limit=2" }
+        "self": { "href": "http://host/songs/?start=5&limit=2" },
+        "collection": { "href": "http://host/songs/" }
     },
     "pagination": {
         "currentPage": 3,
@@ -223,7 +222,7 @@ Content-Type: application/json
 }
 ```
 
-### PATCH
+### PUT
 
 ```json
 POST /songs/:id
@@ -233,6 +232,7 @@ Content-Type: application/json
 {
     "title": "Blitzkrieg Bop",
     "author": "Ramones",
+    "inRepertoireSince": "2022",
 }
 ```
 
@@ -276,30 +276,6 @@ Content-Type: application/json
 }
 ```
 
-
-### OPTIONS :id
-
-```json
-OPTIONS /songs/:id
-Accept: application/json
-
-```
-
-response type: allow methods array
-
-
-```json
-HTTP/1.1 200 OK
-Content-Type: application/json
-Allow: GET,PATCH,DELETE,OPTIONS
-Access-Control-Allow-Methods: GET,PATCH,DELETE,OPTIONS
-
-{
-    "allow-methods": ["GET", "PATCH", "DELETE", "OPTIONS"]
-}
-```
-
-
 ### OPTIONS 
 
 ```json
@@ -318,6 +294,29 @@ Allow: GET,POST,OPTIONS
 Access-Control-Allow-Methods: GET,POST,OPTIONS
 
 {
-    "allow-methods": ["GET", "POST",  "OPTIONS"]
+    "allow-methods": ["GET", "POST", "OPTIONS"]
+}
+```
+
+
+### OPTIONS :id
+
+```json
+OPTIONS /songs/:id
+Accept: application/json
+
+```
+
+response type: allow methods array
+
+
+```json
+HTTP/1.1 200 OK
+Content-Type: application/json
+Allow: GET,PUT,DELETE,OPTIONS
+Access-Control-Allow-Methods: GET,PUT,DELETE,OPTIONS
+
+{
+    "allow-methods": ["GET", "PUT", "DELETE", "OPTIONS"]
 }
 ```
