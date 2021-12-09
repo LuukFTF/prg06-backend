@@ -10,22 +10,6 @@ console.log("test")
 // Song Routes
 router
 
-.use('/', (req, res, next) => {
-    try {
-        console.log("middleware collectie")
-        let contentType = req.get("Content-Type")
-        console.log("Content-Type: " + contentType)
-
-        if (contentType == "application/json") {
-            next()
-        } else {
-            res.status(400).json({ message: "content type '" + contentType + "' not allowed, only allowed accept: 'application/json'" })
-        }
-    } catch (err) {
-        res.status(500).json({ message: err.message })
-    }
-})
-
 // Songs Collection View
 .get('/', async (req, res) => {
     try {
@@ -71,7 +55,8 @@ router
 
 
 // New Song
-.post('/', async (req, res) => {
+.post('/', checkContentType, async (req, res) => {
+
     const song = new Song({
         title: req.body.title,
         author: req.body.author,
@@ -87,12 +72,15 @@ router
 })
 
 // Update Song
-.patch('/:id', getSong, async (req, res) => {
+.put('/:id', checkContentType, getSong, async (req, res) => {
     if (req.body.title != null) {
         res.song.title = req.body.title
     }
     if (req.body.author != null) {
         res.song.author = req.body.author
+    }
+    if (req.body.inRepertoireSince != null) {
+        res.song.inRepertoireSince = req.body.inRepertoireSince
     }
     try {
         const updatedSong = await res.song.save()
@@ -114,7 +102,7 @@ router
 
 // Options
 
-.options('/',  (req, res) => {
+.options('/', (req, res) => {
     try {
         res.header("Allow", "GET, POST, OPTIONS")
         res.json(["GET", "POST", "OPTIONS"])
@@ -136,6 +124,25 @@ router
 
 
 // Functions
+
+// Check Content Type Function
+async function checkContentType(req, res, next) {
+    try {
+        console.log("middleware collectie")
+        let contentType = req.get("Content-Type")
+        console.log("Content-Type: " + contentType)
+
+        if (contentType == "application/json") {
+            next()
+        } else {
+            res.status(400).json({ message: "content type '" + contentType + "' not allowed, only allowed accept: 'application/json'" })
+        }
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+
+}
+
 
 // Song Find Function
 async function getSong(req, res, next) {
