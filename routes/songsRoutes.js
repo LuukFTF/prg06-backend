@@ -46,17 +46,8 @@ router
 // Song Detail View
 .get('/:id', getSong, (req, res) => {
     try {
-        let song = res.song.toJSON()
 
-        song = {
-            ...song,
-            "_links": {
-                "self": { "href": "http://" + req.headers.host + "/songs/" + song._id },
-                "collection": { "href": "http://" + req.headers.host + "/songs/" }
-            }
-        }
-
-        res.status(200).json(song)
+        res.status(200).json(res.song)
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
@@ -161,6 +152,20 @@ async function getSong(req, res, next) {
         song = await Song.findById(req.params.id)
         if (song == null) {
             return res.status(404).json({ message: 'Cannot find song'})
+        }
+    } catch (err) {
+        return res.status(500).json({ message: err.message})
+    }
+
+    try {
+        song = song.toJSON()
+
+        song = {
+            ...song,
+            "_links": {
+                "self": { "href": "http://" + req.headers.host + "/songs/" + song._id },
+                "collection": { "href": "http://" + req.headers.host + "/songs/" }
+            }
         }
     } catch (err) {
         return res.status(500).json({ message: err.message})
