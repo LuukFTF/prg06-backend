@@ -11,7 +11,7 @@ console.log("test")
 router
 
 // Songs Collection View
-.get('/', checkAcceptType, async (req, res) => {
+.get('/', async (req, res) => {
     try {
         const songs = await Song.find()
 
@@ -44,7 +44,7 @@ router
 })
 
 // Song Detail View
-.get('/:id', checkAcceptType, getSongANDaddLinksToSong, (req, res) => {
+.get('/:id', getSongANDaddLinksToSong, (req, res) => {
     try {
         res.status(200).json(res.song)
     } catch (err) {
@@ -122,7 +122,7 @@ router
 })
 
 // Delete Song
-.delete('/:id', checkAcceptType, getSong, async (req, res) => {
+.delete('/:id', getSong, async (req, res) => {
     try {
         await res.song.remove()
         res.status(204).json({ message: 'Successfully Deleted Song'})
@@ -133,7 +133,7 @@ router
 
 // Options
 
-.options('/', checkAcceptType, (req, res) => {
+.options('/', (req, res) => {
     try {
         res.header("Allow", "GET, POST, OPTIONS")
         res.status(200).json(["GET", "POST", "OPTIONS"])
@@ -143,7 +143,7 @@ router
 })
 
 // Song Detail View
-.options('/:id', checkAcceptType, (req, res) => {
+.options('/:id', (req, res) => {
     try {
         res.header("Allow", "GET, PUT, DELETE, OPTIONS")
         res.status(200).json(["GET", "PUT", "DELETE", "OPTIONS"])
