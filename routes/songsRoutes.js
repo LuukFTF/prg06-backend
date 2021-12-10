@@ -32,12 +32,12 @@ router
             songItem._links = {
                 "self": { "href": "http://" + req.headers.host + "/songs/" + songItem._id },
                 "collection": { "href": "http://" + req.headers.host + "/songs/" }
-            },
+            }
 
             songsCollection.items.push(songItem)
         }
 
-        res.json(songsCollection)
+        res.status(200).json(songsCollection)
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
@@ -46,7 +46,17 @@ router
 // Song Detail View
 .get('/:id', getSong, (req, res) => {
     try {
-        res.json(res.song)
+        let song = res.song.toJSON()
+
+        song = {
+            ...song,
+            "_links": {
+                "self": { "href": "http://" + req.headers.host + "/songs/" + song._id },
+                "collection": { "href": "http://" + req.headers.host + "/songs/" }
+            }
+        }
+
+        res.status(200).json(song)
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
@@ -84,7 +94,7 @@ router
     }
     try {
         const updatedSong = await res.song.save()
-        res.json(updatedSong)
+        res.status(200).json(updatedSong)
     } catch (err) {
         res.status(400).json({ message: err.message })
     }
@@ -105,7 +115,7 @@ router
 .options('/', (req, res) => {
     try {
         res.header("Allow", "GET, POST, OPTIONS")
-        res.json(["GET", "POST", "OPTIONS"])
+        res.status(200).json(["GET", "POST", "OPTIONS"])
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
@@ -114,8 +124,8 @@ router
 // Song Detail View
 .options('/:id', (req, res) => {
     try {
-        res.header("GET, PUT, DELETE, OPTIONS")
-        res.json(["GET", "PUT", "DELETE", "OPTIONS"])
+        res.header("Allow", "GET, PUT, DELETE, OPTIONS")
+        res.status(200).json(["GET", "PUT", "DELETE", "OPTIONS"])
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
@@ -135,7 +145,7 @@ async function checkContentType(req, res, next) {
         if (contentType == "application/json") {
             next()
         } else {
-            res.status(400).json({ message: "content type '" + contentType + "' not allowed, only allowed accept: 'application/json'" })
+            res.status(415).json({ message: "content type '" + contentType + "' not allowed, only allowed accept: 'application/json'" })
         }
     } catch (err) {
         res.status(500).json({ message: err.message })
