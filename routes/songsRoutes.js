@@ -44,9 +44,8 @@ router
 })
 
 // Song Detail View
-.get('/:id', getSong, (req, res) => {
+.get('/:id', getSongANDaddLinksToSong, (req, res) => {
     try {
-
         res.status(200).json(res.song)
     } catch (err) {
         res.status(500).json({ message: err.message })
@@ -129,9 +128,7 @@ router
 // Check Content Type Function
 async function checkContentType(req, res, next) {
     try {
-        console.log("middleware collectie")
         let contentType = req.get("Content-Type")
-        console.log("Content-Type: " + contentType)
 
         if (contentType == "application/json") {
             next()
@@ -147,6 +144,21 @@ async function checkContentType(req, res, next) {
 
 // Song Find Function
 async function getSong(req, res, next) {
+    let song
+    try {
+        song = await Song.findById(req.params.id)
+        if (song == null) {
+            return res.status(404).json({ message: 'Cannot find song'})
+        }
+    } catch (err) {
+        return res.status(500).json({ message: err.message})
+    }
+
+    res.song = song
+    next()
+}
+
+async function getSongANDaddLinksToSong(req, res, next) {
     let song
     try {
         song = await Song.findById(req.params.id)
@@ -174,6 +186,30 @@ async function getSong(req, res, next) {
     res.song = song
     next()
 }
+
+// async function addLinksToSong(req, res, next) {
+//     try {
+//         let song = req.song.toJSON()
+
+//         song = {
+//             ...song,
+//             "_links": {
+//                 "self": { "href": "http://" + req.headers.host + "/songs/" + song._id },
+//                 "collection": { "href": "http://" + req.headers.host + "/songs/" }
+//             }
+//         }
+
+//         res.song = song
+
+//         console.log(song)
+//         console.log(res.song)
+//         console.log(req.song)
+
+//         next()
+//     } catch (err) {
+//         return res.status(500).json({ message: err.message})
+//     }
+// }
 
 // Export Module
 module.exports = router
