@@ -1,23 +1,31 @@
 
 GET /ping
 Host: localhost:8000
+Accept: application/json
 
 
 ###
 OPTIONS /songs
 Host: localhost:8000
+Accept: application/json
+
 
 ###
 OPTIONS /songs/61a16a91b1dc4a8ca2a10afe
 Host: localhost:8000
+Accept: application/json
+
 
 ###
 GET /songs
 Host: localhost:8000
+Accept: application/json
+
 
 ###
 GET /songs/61a165e9bda769305130dd7d
 Host: localhost:8000
+Accept: application/json
 
 
 ###
@@ -37,10 +45,16 @@ Accept: application/json
 PUT /songs/61a163c71b726cd4421b9730
 Host: localhost:8000
 Content-Type: application/json
-Accept: 
+Accept: application/json
 
 {
     "title": "Apartmasdasdasdasdent",
     "author": "Young taasdasdsdasdhe Giant",
     "inRepertoireSince": "2020"
 }
+
+
+###
+DELETE /songs/61a165e9bda769305130dd7d
+Host: localhost:8000
+Accept: application/json
