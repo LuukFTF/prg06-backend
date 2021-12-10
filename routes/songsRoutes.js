@@ -64,7 +64,22 @@ router
     })
 
     try {
-        const newSong = await song.save();
+        let newSong = await song.save();
+
+        try {
+            newSong = newSong.toJSON()
+    
+            newSong = {
+                ...newSong,
+                "_links": {
+                    "self": { "href": "http://" + req.headers.host + "/songs/" + newSong._id },
+                    "collection": { "href": "http://" + req.headers.host + "/songs/" }
+                }
+            }
+        } catch (err) {
+            return res.status(500).json({ message: err.message})
+        }
+
         res.status(201).json(newSong);
     } catch (err) {
         res.status(400).json({ message: err.message})
@@ -82,8 +97,24 @@ router
     if (req.body.inRepertoireSince != null) {
         res.song.inRepertoireSince = req.body.inRepertoireSince
     }
+
     try {
-        const updatedSong = await res.song.save()
+        let updatedSong = await res.song.save()
+
+        try {
+            updatedSong = updatedSong.toJSON()
+    
+            updatedSong = {
+                ...updatedSong,
+                "_links": {
+                    "self": { "href": "http://" + req.headers.host + "/songs/" + updatedSong._id },
+                    "collection": { "href": "http://" + req.headers.host + "/songs/" }
+                }
+            }
+        } catch (err) {
+            return res.status(500).json({ message: err.message})
+        }
+
         res.status(200).json(updatedSong)
     } catch (err) {
         res.status(400).json({ message: err.message })

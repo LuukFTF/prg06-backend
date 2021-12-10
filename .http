@@ -16,7 +16,7 @@ GET /songs
 Host: localhost:8000
 
 ###
-DELETE /songs/61a165e9bda769305130dd7d
+GET /songs/61a165e9bda769305130dd7d
 Host: localhost:8000
 
 
@@ -26,14 +26,14 @@ Host: localhost:8000
 Content-Type: application/json
 
 {
-    "title": "Apartment",
-    "author": "Young the Giant",
-    "inRepertoireSince": "2020"
+    "title": "Apartmentasdasdasdasd",
+    "author": "Young the Giantasdasd",
+    "inRepertoireSince": "2020asasdasdd"
 }
 
 
 ###
-PUT /songs/61a16a91b1dc4a8ca2a10afe
+PUT /songs/61a163c71b726cd4421b9730
 Host: localhost:8000
 Content-Type: application/json
 
