@@ -24,6 +24,7 @@ Host: localhost:8000
 POST /songs
 Host: localhost:8000
 Content-Type: application/json
+Accept: application/json
 
 {
     "title": "Apartmentasdasdasdasd",
@@ -36,6 +37,7 @@ Content-Type: application/json
 PUT /songs/61a163c71b726cd4421b9730
 Host: localhost:8000
 Content-Type: application/json
+Accept: application/json
 
 {
     "title": "Apartmasdasdasdasdent",

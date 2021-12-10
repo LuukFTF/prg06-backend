@@ -55,7 +55,7 @@ router
 
 
 // New Song
-.post('/', checkContentType, async (req, res) => {
+.post('/', checkContentType, checkAcceptType, async (req, res) => {
 
     const song = new Song({
         title: req.body.title,
@@ -87,7 +87,7 @@ router
 })
 
 // Update Song
-.put('/:id', checkContentType, getSong, async (req, res) => {
+.put('/:id', checkContentType, checkAcceptType, getSong, async (req, res) => {
     if (req.body.title != null) {
         res.song.title = req.body.title
     }
@@ -125,7 +125,7 @@ router
 .delete('/:id', getSong, async (req, res) => {
     try {
         await res.song.remove()
-        res.status(204).json({ message: 'Deleted Song'})
+        res.status(204).json({ message: 'Successfully Deleted Song'})
     } catch (err) {
         res.status(500).json({ message: err.message})
     }
@@ -164,12 +164,25 @@ async function checkContentType(req, res, next) {
         if (contentType == "application/json") {
             next()
         } else {
-            res.status(415).json({ message: "content type '" + contentType + "' not allowed, only allowed accept: 'application/json'" })
+            res.status(415).json({ message: "'Content-Type: " + contentType + "' not allowed, only allowed 'Content-Type: application/json'" })
         }
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
+}
 
+async function checkAcceptType(req, res, next) {
+    try {
+        let acceptType = req.get("Accept")
+
+        if (acceptType == "application/json") {
+            next()
+        } else {
+            res.status(415).json({ message: "'Accept: " + acceptType + "' not allowed, only allowed 'Accept: application/json'" })
+        }
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
 }
 
 
