@@ -175,7 +175,7 @@ async function checkAcceptType(req, res, next) {
     try {
         let acceptType = req.get("Accept")
 
-        if (acceptType == "application/json") {
+        if (req.method == 'POST' || acceptType == "application/json") {
             next()
         } else {
             res.status(415).json({ message: "'Accept: " + acceptType + "' not allowed, only allowed 'Accept: application/json'" })
