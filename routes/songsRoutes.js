@@ -82,6 +82,7 @@ router
 
         res.status(201).json(newSong);
     } catch (err) {
+        console.log("client error httpurl")
         res.status(400).json({ message: err.message})
     }
 })
@@ -161,7 +162,7 @@ async function checkContentType(req, res, next) {
     try {
         let contentType = req.get("Content-Type")
 
-        if (contentType == "application/json") {
+        if (contentType == "application/json" || contentType == "application/x-www-form-urlencoded") {
             next()
         } else {
             res.status(415).json({ message: "'Content-Type: " + contentType + "' not allowed, only allowed 'Content-Type: application/json'" })
@@ -175,9 +176,10 @@ async function checkAcceptType(req, res, next) {
     try {
         let acceptType = req.get("Accept")
 
-        if (req.method == 'POST' || acceptType == "application/json") {
+        if (req.method === 'POST' || acceptType == "application/json" || acceptType == "application/x-www-form-urlencoded") {
             next()
         } else {
+            console.log("accept type client error")
             res.status(415).json({ message: "'Accept: " + acceptType + "' not allowed, only allowed 'Accept: application/json'" })
         }
     } catch (err) {

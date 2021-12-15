@@ -14,7 +14,7 @@ const db = mongoose.connection
 db.on('error', (error) => console.error(error))
 db.once('open', () => console.log('Connected to Database'))
 
-app.use(express.json())
+app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({ extendedparse: true }))
 
 app.get('/ping', (req, res) => {
