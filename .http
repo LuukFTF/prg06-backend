@@ -18,12 +18,12 @@ Accept: application/json
 
 ###
 GET /songs
-Host: localhost:8001
+Host: localhost:8000
 Accept: application/json
 
 ###
 GET /songs?start=5&limit=4
-Host: localhost:8001
+Host: localhost:8000
 Accept: application/json
 
 
@@ -35,7 +35,7 @@ Accept: application/json
 
 ###
 POST /songs
-Host: 145.24.222.193:8000
+Host: localhost:8000
 Content-Type: application/json
 Accept: application/json
 

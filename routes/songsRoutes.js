@@ -11,6 +11,12 @@ console.log("test")
 // Song Routes
 router
 
+.use('/', (req, res, next) => {
+    res.header("Acces-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
+    next()
+})
+
 // Songs Collection View
 .get('/', checkAcceptType, async (req, res) => {
     try {
