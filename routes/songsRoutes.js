@@ -48,12 +48,35 @@ router
             if(limit != null) {
                 songsCollection = {
                     ...songsCollection,
-                    "pagination": generatePagination(totalItems, start, limit)
+                    "pagination": generatePagination(totalItems, start, limit, req, res)
                 }
             } else {
                 songsCollection = {
                     ...songsCollection,
-                    "pagination": "empty"
+                    "pagination": {
+                        "currentPage": 1,
+                        "currentItems": totalItems,
+                        "totalPages": 1,
+                        "totalItems": totalItems,
+                        "links": {
+                            "first": {
+                                "page": 1,
+                                "href": "http://" + req.headers.host + "/songs/"
+                            },
+                            "last": {
+                                "page": 1,
+                                "href": "http://" + req.headers.host + "/songs/"
+                            },
+                            "previous": {
+                                "page": 1,
+                                "href": "http://" + req.headers.host + "/songs/"
+                            },
+                            "next": {
+                                "page": 1,
+                                "href": "http://" + req.headers.host + "/songs/"
+                            }
+                        }
+                    }
                 }
             }
 
@@ -404,7 +427,7 @@ function getPageNumber(totalItems, start, limit, itemNumber) {
 }
 
 
-function generatePagination(totalItems, start, limit) {
+function generatePagination(totalItems, start, limit, req, res) {
     try {
         let pagination = {
             "currentPage": getCurrentPage(totalItems, start, limit),
@@ -414,27 +437,26 @@ function generatePagination(totalItems, start, limit) {
             "links": {
                 "first": {
                     "page": getPageNumber(totalItems, start, limit, getFirstPageItem(totalItems, start, limit)),
-                    "href": "http://host/items/" + getFirstPageItemQuery()
+                    "href": "http://" + req.headers.host + "/songs/" + getFirstPageItemQuery()
                 },
                 "last": {
                     "page": getPageNumber(totalItems, start, limit, getLastPageItem(totalItems, start, limit)),
-                    "href": "http://host/items/" + getLastPageItemQuery()
+                    "href": "http://" + req.headers.host + "/songs/" + getLastPageItemQuery()
                 },
                 "previous": {
                     "page": getPageNumber(totalItems, start, limit, getPreviousPageItem(totalItems, start, limit)),
-                    "href": "http://host/items/" + getPreviousPageItemQuery()
+                    "href": "http://" + req.headers.host + "/songs/" + getPreviousPageItemQuery()
                 },
                 "next": {
                     "page": getPageNumber(totalItems, start, limit, getNextPageItem(totalItems, start, limit)),
-                    "href": "http://host/items/" + getNextPageItemQuery()
+                    "href": "http://" + req.headers.host + "/songs/" + getNextPageItemQuery()
                 }
             }
         }
 
         return pagination
     } catch (err) {
-        // return res.status(500).json({ message: err.message})
-       console.error("500:" + err)
+        return res.status(500).json({ message: err.message})
     }
 }
 
