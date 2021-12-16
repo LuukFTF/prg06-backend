@@ -281,7 +281,7 @@ function getCurrentPage(totalItems, start, limit) {
 }
 
 function getTotalPages(start, limit) {
-    totalPages = 10
+    totalPages = 5
 
     return totalPages
 }
@@ -294,7 +294,11 @@ function getFirstPageItem(totalItems, start, limit) {
 }
 
 function getFirstPageItemQuery(totalItems, start, limit) {
+    firstPageItem = getFirstPageItem()
 
+    firstPageItemQuery = "?start=" + firstPageItem + "&limit=" + limit
+
+    return firstPageItemQuery
 }
 
 function getLastPageItem(totalItems, start, limit) {
@@ -305,8 +309,12 @@ function getLastPageItem(totalItems, start, limit) {
     return lastPageItem
 }
 
-function getlastPageItemQuery(totalItems, start, limit) {
-    
+function getLastPageItemQuery(totalItems, start, limit) {
+    lastPageItem = getLastPageItem()
+
+    lastPageItemQuery = "?start=" + lastPageItem + "&limit=" + limit
+
+    return lastPageItemQuery
 }
 
 function getPreviousPageItem(totalItems, start, limit) {
@@ -316,7 +324,11 @@ function getPreviousPageItem(totalItems, start, limit) {
 }
 
 function getPreviousPageItemQuery(totalItems, start, limit) {
+    previousPageItem = getPreviousPageItem()
 
+    previousPageItemQuery = "?start=" + previousPageItem + "&limit=" + limit
+
+    return previousPageItemQuery
 }
 
 
@@ -328,47 +340,56 @@ function getNextPageItem(totalItems, start, limit) {
 
 
 function getNextPageItemQuery(totalItems, start, limit) {
+    nextPageItem = getNextPageItem()
 
+    nextPageItemQuery = "?start=" + nextPageItem + "&limit=" + limit
+
+    return nextPageItemQuery
 }
 
 
-function getPageNumer(totalItems, start, limit, itemNumber) {
+function getPageNumber(totalItems, start, limit, itemNumber) {
+    pageNumber = 2
 
+    return pageNumber
 }
 
 
-function generatePagination(totalItems, start, limit) {
+function generatePagination(start = 5, limit = 2, totalItems = getTotalItems()) {
     try {
         pagination = {
-            "currentPage": 3,
+            "currentPage": getCurrentPage(),
             "currentItems": getCurrentItems(),
-            "totalPages": 5,
-            "totalItems": 10,
+            "totalPages": getTotalPages(),
+            "totalItems": totalItems,
             "links": {
                 "first": {
-                    "page": 1,
-                    "href": "http://host/items/?start=1&limit=2"
+                    "page": getPageNumber(totalItems, start, limit, getFirstPageItemQuery()),
+                    "href": "http://host/items/" + getFirstPageItemQuery()
                 },
                 "last": {
-                    "page": 5,
-                    "href": "http://host/items/?start=9&limit=2"
+                    "page": getPageNumber(totalItems, start, limit, getLastPageItemQuery()),
+                    "href": "http://host/items/" + getLastPageItemQuery()
                 },
                 "previous": {
-                    "page": 2,
-                    "href": "http://host/items/?start=3&limit=2"
+                    "page": getPageNumber(totalItems, start, limit, getPreviousPageItemQuery()),
+                    "href": "http://host/items/" + getPreviousPageItemQuery()
                 },
                 "next": {
-                    "page": 4,
-                    "href": "http://host/items/?start=7&limit=2"
+                    "page": getPageNumber(totalItems, start, limit, getNextPageItemQuery()),
+                    "href": "http://host/items/" + getNextPageItemQuery()
                 }
             }
         }
 
+        return pagination
     } catch (err) {
-
+        // return res.status(500).json({ message: err.message})
+       console.error("500:" + err)
     }
-
 }
+
+console.log(generatePagination(5, 2, getTotalItems()))
 
 // Export Module
 module.exports = router
