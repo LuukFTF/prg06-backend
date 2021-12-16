@@ -54,7 +54,7 @@ router
         try {
             let start = req.query.start
             let limit = req.query.limit
-            let totalItems = await Song.countDocuments();  
+            let totalItems = await Song.estimatedDocumentCount();  
     
             console.log("total items:" + totalItems, "start:" + start, "limit:" + limit)
 
@@ -343,58 +343,46 @@ function getCurrentPage(totalItems, start, limit) {
         currentPage = 1
     }
 
-    currentPage = start / limit
+    currentPage = Math.ceil(start / limit)
 
     return currentPage
 }
 
 function getFirstPageItemQuery(totalItems, start, limit) {
-    let firstPageItemQuery
-
-    firstPageItemQuery = "?start=" + 1 + "&limit=" + limit
+    let firstPageItemQuery = "?start=" + 1 + "&limit=" + limit
 
     return firstPageItemQuery
 }
 
 function getLastPageItem(totalItems, start, limit) {
-    let lastPageItem
-
-    lastPageItem = totalItems - limit + 1
+    let lastPageItem = totalItems % limit 
 
     return lastPageItem
 }
 
 function getLastPageItemQuery(totalItems, start, limit) {
     let lastPageItem = getLastPageItem(totalItems, start, limit)
-    let lastPageItemQuery 
-
-    lastPageItemQuery = "?start=" + lastPageItem + "&limit=" + limit
+    let lastPageItemQuery = "?start=" + lastPageItem + "&limit=" + limit
 
     return lastPageItemQuery
 }
 
 function getPreviousPageItem(totalItems, start, limit) {
-    let previousPageItem
-
-    previousPageItem = start - limit 
+    let previousPageItem = start - limit 
 
     return previousPageItem
 }
 
 function getPreviousPageItemQuery(totalItems, start, limit) {
     let previousPageItem = getPreviousPageItem(totalItems, start, limit)
-    let previousPageItemQuery
-
-    previousPageItemQuery = "?start=" + previousPageItem + "&limit=" + limit
+    let previousPageItemQuery = "?start=" + previousPageItem + "&limit=" + limit
 
     return previousPageItemQuery
 }
 
 
 function getNextPageItem(totalItems, start, limit) {
-    let nextPageItem
-
-    nextPageItem = start + limit 
+    let nextPageItem = start + limit 
 
     return nextPageItem
 }
@@ -402,24 +390,29 @@ function getNextPageItem(totalItems, start, limit) {
 
 function getNextPageItemQuery(totalItems, start, limit) {
     let nextPageItem = getNextPageItem(totalItems, start, limit)
-    let nextPageItemQuery
-
-    nextPageItemQuery = "?start=" + nextPageItem + "&limit=" + limit
+    let nextPageItemQuery = "?start=" + nextPageItem + "&limit=" + limit
 
     return nextPageItemQuery
 }
 
 
 function getPageNumber(totalItems, start, limit, itemNumber) {
-    let pageNumber
+    let pageNumber = Math.ceil(itemNumber / limit)
 
-    pageNumber = Math.ceil(itemNumber / limit)
-
+    console.log("pageNumber: " + pageNumber)
     return pageNumber
 }
 
 
 function generatePagination(totalItems, start, limit, req, res) {
+    lastPageItem = getLastPageItem(totalItems, start, limit)
+    previousPageItem = getPreviousPageItem(totalItems, start, limit)
+    nextPageItem = getNextPageItem(totalItems, start, limit)
+
+    console.log("lastPageItem: " + lastPageItem)
+    console.log("previousPageItem: " + previousPageItem)
+    console.log("nextPageItem: " + nextPageItem)
+
     try {
         let pagination = {
             "currentPage": getCurrentPage(totalItems, start, limit),
@@ -429,18 +422,18 @@ function generatePagination(totalItems, start, limit, req, res) {
             "links": {
                 "first": {
                     "page": 1,
-                    "href": "http://" + req.headers.host + "/songs/" + getFirstPageItemQuery()
+                    "href": "http://" + req.headers.host + "/songs/" + "?start=" + 1 + "&limit=" + limit
                 },
                 "last": {
-                    "page": getPageNumber(totalItems, start, limit, getLastPageItem(totalItems, start, limit)),
+                    "page": getPageNumber(totalItems, start, limit, lastPageItem),
                     "href": "http://" + req.headers.host + "/songs/" + getLastPageItemQuery()
                 },
                 "previous": {
-                    "page": getPageNumber(totalItems, start, limit, getPreviousPageItem(totalItems, start, limit)),
+                    "page": getPageNumber(totalItems, start, limit, previousPageItem),
                     "href": "http://" + req.headers.host + "/songs/" + getPreviousPageItemQuery()
                 },
                 "next": {
-                    "page": getPageNumber(totalItems, start, limit, getNextPageItem(totalItems, start, limit)),
+                    "page": getPageNumber(totalItems, start, limit, nextPageItem),
                     "href": "http://" + req.headers.host + "/songs/" + getNextPageItemQuery()
                 }
             }
