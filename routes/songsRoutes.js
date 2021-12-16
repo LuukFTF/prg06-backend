@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const { notEqual } = require('assert');
 const express = require('express');
+const { start } = require('repl');
 const router = express.Router();
 const Song = require('../models/songModel');
 
@@ -36,6 +37,13 @@ router
 
             songsCollection.items.push(songItem)
         }
+
+        let start = req.query.start
+        let limit = req.query.limit
+        let totalItems = await Song.countDocuments();  
+
+        console.log("total items:" + totalItems, "start:" + start, "limit:" + limit)
+
 
         res.status(200).json(songsCollection)
     } catch (err) {
@@ -270,12 +278,16 @@ function getTotalItems() {
     return totalItems
 }
 
-function getCurrentItems(totalItems, start, limit) {
-    let currentItems
+function getTotalPages(totalItems, start, limit) {
+    let totalPages
 
-    currentItems = limit
+    if (limit == null) {
+        totalPages = 1
+    }
 
-    return currentItems
+    totalPages = Math.ceil(totalItems / limit)
+
+    return totalPages
 }
 
 function getCurrentPage(totalItems, start, limit) {
@@ -290,17 +302,6 @@ function getCurrentPage(totalItems, start, limit) {
     return currentPage
 }
 
-function getTotalPages(totalItems, start, limit) {
-    let totalPages
-
-    if (limit == null) {
-        totalPages = 1
-    }
-
-    totalPages = Math.ceil(totalItems / limit)
-
-    return totalPages
-}
 
 
 function getFirstPageItem(totalItems, start, limit) {
@@ -386,14 +387,14 @@ function getPageNumber(totalItems, start, limit, itemNumber) {
 }
 
 
-function generatePagination(start = 5, limit = 2, totalItems = getTotalItems()) {
+function generatePagination(start, limit, totalItems = getTotalItems()) {
     try {
         start = 5
         limit = 2
 
         let pagination = {
             "currentPage": getCurrentPage(totalItems, start, limit),
-            "currentItems": getCurrentItems(totalItems, start, limit),
+            "currentItems": limit,
             "totalPages": getTotalPages(totalItems, start, limit),
             "totalItems": totalItems,
             "links": {
@@ -423,7 +424,7 @@ function generatePagination(start = 5, limit = 2, totalItems = getTotalItems()) 
     }
 }
 
-console.log(generatePagination(5, 2, getTotalItems()))
+// console.log(generatePagination(5, 2, getTotalItems()))
 
 // Export Module
 module.exports = router
