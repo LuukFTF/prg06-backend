@@ -348,21 +348,10 @@ function getCurrentPage(totalItems, start, limit) {
     return currentPage
 }
 
-
-
-function getFirstPageItem(totalItems, start, limit) {
-    let firstPageItem
-
-    firstPageItem = 1
-
-    return firstPageItem
-}
-
 function getFirstPageItemQuery(totalItems, start, limit) {
-    let firstPageItem = getFirstPageItem(totalItems, start, limit)
     let firstPageItemQuery
 
-    firstPageItemQuery = "?start=" + firstPageItem + "&limit=" + limit
+    firstPageItemQuery = "?start=" + 1 + "&limit=" + limit
 
     return firstPageItemQuery
 }
@@ -439,7 +428,7 @@ function generatePagination(totalItems, start, limit, req, res) {
             "totalItems": totalItems,
             "links": {
                 "first": {
-                    "page": getPageNumber(totalItems, start, limit, getFirstPageItem(totalItems, start, limit)),
+                    "page": 1,
                     "href": "http://" + req.headers.host + "/songs/" + getFirstPageItemQuery()
                 },
                 "last": {
