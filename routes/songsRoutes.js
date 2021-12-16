@@ -39,13 +39,13 @@ router
         }
 
         try {
-            let start = req.query.start
-            let limit = req.query.limit
+            let start = parseInt(req.query.start)
+            let limit = parseInt(req.query.limit)
             let totalItems = await Song.countDocuments();  
     
             console.log("total items:" + totalItems, "start:" + start, "limit:" + limit)
 
-            if(limit != null) {
+            if(limit !== null) {
                 songsCollection = {
                     ...songsCollection,
                     "pagination": generatePagination(totalItems, start, limit, req, res)
@@ -362,10 +362,7 @@ function getFirstPageItemQuery(totalItems, start, limit) {
 }
 
 function getLastPageItem(totalItems, start, limit) {
-    let lastPage
     let lastPageItem
-
-    lastPage = 5
 
     lastPageItem = totalItems - limit + 1
 
