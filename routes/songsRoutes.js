@@ -27,7 +27,12 @@ router
 // Songs Collection View
 .get('/', checkAcceptType, async (req, res) => {
     try {
-        const songs = await Song.find()
+        let start = req.query.start
+        let limit = req.query.limit
+        start = start ? parseInt(start) : 1;
+        limit = limit ? parseInt(limit) : totalItems;
+
+        const songs = await Song.find({}, null, {skip: start - 1, limit: limit})
 
         let songsCollection = {
             "items": [],
@@ -52,13 +57,11 @@ router
         }
 
         try {
-            let start = req.query.start
-            let limit = req.query.limit
             let totalItems = await Song.estimatedDocumentCount();  
     
             console.log("total items:" + totalItems, "start:" + start, "limit:" + limit)
 
-            if(limit == NaN || limit == null || limit == undefined) {
+            if(limit == totalItems) {
                 songsCollection = {
                     ...songsCollection,
                     "pagination": {
@@ -427,8 +430,6 @@ function getPageNumber(totalItems, start, limit, itemNumber) {
 
 
 function generatePagination(totalItems, start, limit, req, res) {
-    start = start ? parseInt(start) : 1;
-    limit = limit ? parseInt(limit) : totalItems;
     lastPageItem = getLastPageItem(totalItems, start, limit)
     previousPageItem = getPreviousPageItem(totalItems, start, limit)
     nextPageItem = getNextPageItem(totalItems, start, limit)
