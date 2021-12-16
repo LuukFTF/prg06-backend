@@ -45,7 +45,7 @@ router
     
             console.log("total items:" + totalItems, "start:" + start, "limit:" + limit)
 
-            if(limit !== null) {
+            if(limit != null) {
                 songsCollection = {
                     ...songsCollection,
                     "pagination": generatePagination(totalItems, start, limit, req, res)
