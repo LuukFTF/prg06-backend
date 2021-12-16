@@ -348,14 +348,8 @@ function getCurrentPage(totalItems, start, limit) {
     return currentPage
 }
 
-function getFirstPageItemQuery(totalItems, start, limit) {
-    let firstPageItemQuery = "?start=" + 1 + "&limit=" + limit
-
-    return firstPageItemQuery
-}
-
 function getLastPageItem(totalItems, start, limit) {
-    let lastPageItem = totalItems % limit 
+    let lastPageItem = (totalItems- (start - 1)) % limit;
 
     return lastPageItem
 }
@@ -405,6 +399,8 @@ function getPageNumber(totalItems, start, limit, itemNumber) {
 
 
 function generatePagination(totalItems, start, limit, req, res) {
+    start = start ? parseInt(start) : 1;
+    limit = limit ? parseInt(limit) : totalItems;
     lastPageItem = getLastPageItem(totalItems, start, limit)
     previousPageItem = getPreviousPageItem(totalItems, start, limit)
     nextPageItem = getNextPageItem(totalItems, start, limit)
