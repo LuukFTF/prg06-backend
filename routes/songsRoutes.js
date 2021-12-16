@@ -39,18 +39,13 @@ router
         }
 
         try {
-            let start = parseInt(req.query.start)
-            let limit = parseInt(req.query.limit)
+            let start = req.query.start
+            let limit = req.query.limit
             let totalItems = await Song.countDocuments();  
     
             console.log("total items:" + totalItems, "start:" + start, "limit:" + limit)
 
-            if(limit != null) {
-                songsCollection = {
-                    ...songsCollection,
-                    "pagination": generatePagination(totalItems, start, limit, req, res)
-                }
-            } else {
+            if(limit == NaN || limit == null) {
                 songsCollection = {
                     ...songsCollection,
                     "pagination": {
@@ -77,6 +72,11 @@ router
                             }
                         }
                     }
+                }
+            } else {
+                songsCollection = {
+                    ...songsCollection,
+                    "pagination": generatePagination(totalItems, start, parseInt(limit), req, res)
                 }
             }
 
