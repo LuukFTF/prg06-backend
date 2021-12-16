@@ -50,7 +50,7 @@ router
                 "pagination": generatePagination(totalItems, start, limit)
             }
         } catch {
-            res.status(500).json({ message: err.message })
+            res.status(500).json({ message: "pagination could not be build; " + err.message })
         }
 
         res.status(200).json(songsCollection)
