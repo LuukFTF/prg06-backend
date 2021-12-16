@@ -29,6 +29,9 @@ router
     try {
         let start = req.query.start
         let limit = req.query.limit
+        let totalItems = await Song.estimatedDocumentCount();  
+        console.log("total items:" + totalItems, "start:" + start, "limit:" + limit)
+
         start = start ? parseInt(start) : 1;
         limit = limit ? parseInt(limit) : totalItems;
 
@@ -56,11 +59,8 @@ router
             songsCollection.items.push(songItem)
         }
 
-        try {
-            let totalItems = await Song.estimatedDocumentCount();  
-    
-            console.log("total items:" + totalItems, "start:" + start, "limit:" + limit)
-
+        try {    
+            
             if(start == 1) {
                 songsCollection = {
                     ...songsCollection,
