@@ -60,7 +60,7 @@ router
         }
 
         try {    
-            
+
             if(start == 1) {
                 songsCollection = {
                     ...songsCollection,
@@ -69,7 +69,7 @@ router
                         "currentItems": totalItems,
                         "totalPages": 1,
                         "totalItems": totalItems,
-                        "links": {
+                        "_links": {
                             "first": {
                                 "page": 1,
                                 "href": "http://" + req.headers.host + "/songs/"
@@ -97,7 +97,7 @@ router
                         "currentItems": 1,
                         "totalPages": 14,
                         "totalItems": 14,
-                        "links": {
+                        "_links": {
                             "first": {
                                 "page": 1,
                                 "href": "http://" + req.headers.host + "/songs/" + "?start=" + 1 + "&limit=" + 1
@@ -444,7 +444,7 @@ function generatePagination(totalItems, start, limit, req, res) {
             "currentItems": limit,
             "totalPages": getTotalPages(totalItems, start, limit),
             "totalItems": totalItems,
-            "links": {
+            "_links": {
                 "first": {
                     "page": 1,
                     "href": "http://" + req.headers.host + "/songs/" + "?start=" + 1 + "&limit=" + limit
