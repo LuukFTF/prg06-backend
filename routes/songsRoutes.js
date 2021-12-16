@@ -61,7 +61,7 @@ router
     
             console.log("total items:" + totalItems, "start:" + start, "limit:" + limit)
 
-            if(limit == 14) {
+            if(start == 1) {
                 songsCollection = {
                     ...songsCollection,
                     "pagination": {
