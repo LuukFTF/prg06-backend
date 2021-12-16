@@ -45,10 +45,19 @@ router
     
             console.log("total items:" + totalItems, "start:" + start, "limit:" + limit)
 
-            songsCollection = {
-                ...songsCollection,
-                "pagination": generatePagination(totalItems, start, limit)
+            if(limit != null) {
+                songsCollection = {
+                    ...songsCollection,
+                    "pagination": generatePagination(totalItems, start, limit)
+                }
+            } else {
+                songsCollection = {
+                    ...songsCollection,
+                    "pagination": "empty"
+                }
             }
+
+
         } catch {
             res.status(500).json({ message: "pagination could not be build; " + err.message })
         }
