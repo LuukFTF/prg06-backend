@@ -263,38 +263,57 @@ async function getSongANDaddLinksToSong(req, res, next) {
 
 // Pagination Functions
 function getTotalItems() {
+    let totalItems
+    
     totalItems = 10
 
     return totalItems
 }
 
 function getCurrentItems(totalItems, start, limit) {
-    currentItems = 2
+    let currentItems
+
+    currentItems = limit
 
     return currentItems
 }
 
 function getCurrentPage(totalItems, start, limit) {
+    let currentPage
+
+    if (start == null || limit == null) {
+        currentPage = 1
+    }
+
     currentPage = 3
 
     return currentPage
 }
 
-function getTotalPages(start, limit) {
-    totalPages = 5
+function getTotalPages(totalItems, start, limit) {
+    let totalPages
+
+    if (limit == null) {
+        totalPages = 1
+    }
+
+    totalPages = Math.ceil(totalItems / limit)
 
     return totalPages
 }
 
 
 function getFirstPageItem(totalItems, start, limit) {
+    let firstPageItem
+
     firstPageItem = 1
 
     return firstPageItem
 }
 
 function getFirstPageItemQuery(totalItems, start, limit) {
-    firstPageItem = getFirstPageItem()
+    let firstPageItem = getFirstPageItem(totalItems, start, limit)
+    let firstPageItemQuery
 
     firstPageItemQuery = "?start=" + firstPageItem + "&limit=" + limit
 
@@ -302,6 +321,9 @@ function getFirstPageItemQuery(totalItems, start, limit) {
 }
 
 function getLastPageItem(totalItems, start, limit) {
+    let lastPage
+    let lastPageItem
+
     lastPage = 5
 
     lastPageItem = totalItems - limit + 1
@@ -310,7 +332,8 @@ function getLastPageItem(totalItems, start, limit) {
 }
 
 function getLastPageItemQuery(totalItems, start, limit) {
-    lastPageItem = getLastPageItem()
+    let lastPageItem = getLastPageItem(totalItems, start, limit)
+    let lastPageItemQuery 
 
     lastPageItemQuery = "?start=" + lastPageItem + "&limit=" + limit
 
@@ -318,13 +341,16 @@ function getLastPageItemQuery(totalItems, start, limit) {
 }
 
 function getPreviousPageItem(totalItems, start, limit) {
+    let previousPageItem
+
     previousPageItem = start - limit 
 
     return previousPageItem
 }
 
 function getPreviousPageItemQuery(totalItems, start, limit) {
-    previousPageItem = getPreviousPageItem()
+    let previousPageItem = getPreviousPageItem(totalItems, start, limit)
+    let previousPageItemQuery
 
     previousPageItemQuery = "?start=" + previousPageItem + "&limit=" + limit
 
@@ -333,6 +359,8 @@ function getPreviousPageItemQuery(totalItems, start, limit) {
 
 
 function getNextPageItem(totalItems, start, limit) {
+    let nextPageItem
+
     nextPageItem = start + limit 
 
     return nextPageItem
@@ -340,7 +368,8 @@ function getNextPageItem(totalItems, start, limit) {
 
 
 function getNextPageItemQuery(totalItems, start, limit) {
-    nextPageItem = getNextPageItem()
+    let nextPageItem = getNextPageItem(totalItems, start, limit)
+    let nextPageItemQuery
 
     nextPageItemQuery = "?start=" + nextPageItem + "&limit=" + limit
 
@@ -349,7 +378,9 @@ function getNextPageItemQuery(totalItems, start, limit) {
 
 
 function getPageNumber(totalItems, start, limit, itemNumber) {
-    pageNumber = 2
+    let pageNumber
+
+    pageNumber = Math.ceil(itemNumber / limit)
 
     return pageNumber
 }
@@ -357,26 +388,29 @@ function getPageNumber(totalItems, start, limit, itemNumber) {
 
 function generatePagination(start = 5, limit = 2, totalItems = getTotalItems()) {
     try {
-        pagination = {
-            "currentPage": getCurrentPage(),
-            "currentItems": getCurrentItems(),
-            "totalPages": getTotalPages(),
+        start = 5
+        limit = 2
+
+        let pagination = {
+            "currentPage": getCurrentPage(totalItems, start, limit),
+            "currentItems": getCurrentItems(totalItems, start, limit),
+            "totalPages": getTotalPages(totalItems, start, limit),
             "totalItems": totalItems,
             "links": {
                 "first": {
-                    "page": getPageNumber(totalItems, start, limit, getFirstPageItemQuery()),
+                    "page": getPageNumber(totalItems, start, limit, getFirstPageItem(totalItems, start, limit)),
                     "href": "http://host/items/" + getFirstPageItemQuery()
                 },
                 "last": {
-                    "page": getPageNumber(totalItems, start, limit, getLastPageItemQuery()),
+                    "page": getPageNumber(totalItems, start, limit, getLastPageItem(totalItems, start, limit)),
                     "href": "http://host/items/" + getLastPageItemQuery()
                 },
                 "previous": {
-                    "page": getPageNumber(totalItems, start, limit, getPreviousPageItemQuery()),
+                    "page": getPageNumber(totalItems, start, limit, getPreviousPageItem(totalItems, start, limit)),
                     "href": "http://host/items/" + getPreviousPageItemQuery()
                 },
                 "next": {
-                    "page": getPageNumber(totalItems, start, limit, getNextPageItemQuery()),
+                    "page": getPageNumber(totalItems, start, limit, getNextPageItem(totalItems, start, limit)),
                     "href": "http://host/items/" + getNextPageItemQuery()
                 }
             }
