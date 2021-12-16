@@ -172,6 +172,9 @@ async function checkContentType(req, res, next) {
     }
 }
 
+
+
+// Check Accept Type Function
 async function checkAcceptType(req, res, next) {
     try {
         let acceptType = req.get("Accept")
@@ -231,7 +234,7 @@ async function getSongANDaddLinksToSong(req, res, next) {
 
     res.song = song
     next()
-}
+};
 
 // async function addLinksToSong(req, res, next) {
 //     try {
@@ -256,6 +259,116 @@ async function getSongANDaddLinksToSong(req, res, next) {
 //         return res.status(500).json({ message: err.message})
 //     }
 // }
+
+
+// Pagination Functions
+function getTotalItems() {
+    totalItems = 10
+
+    return totalItems
+}
+
+function getCurrentItems(totalItems, start, limit) {
+    currentItems = 2
+
+    return currentItems
+}
+
+function getCurrentPage(totalItems, start, limit) {
+    currentPage = 3
+
+    return currentPage
+}
+
+function getTotalPages(start, limit) {
+    totalPages = 10
+
+    return totalPages
+}
+
+
+function getFirstPageItem(totalItems, start, limit) {
+    firstPageItem = 1
+
+    return firstPageItem
+}
+
+function getFirstPageItemQuery(totalItems, start, limit) {
+
+}
+
+function getLastPageItem(totalItems, start, limit) {
+    lastPage = 5
+
+    lastPageItem = totalItems - limit + 1
+
+    return lastPageItem
+}
+
+function getlastPageItemQuery(totalItems, start, limit) {
+    
+}
+
+function getPreviousPageItem(totalItems, start, limit) {
+    previousPageItem = start - limit 
+
+    return previousPageItem
+}
+
+function getPreviousPageItemQuery(totalItems, start, limit) {
+
+}
+
+
+function getNextPageItem(totalItems, start, limit) {
+    nextPageItem = start + limit 
+
+    return nextPageItem
+}
+
+
+function getNextPageItemQuery(totalItems, start, limit) {
+
+}
+
+
+function getPageNumer(totalItems, start, limit, itemNumber) {
+
+}
+
+
+function generatePagination(totalItems, start, limit) {
+    try {
+        pagination = {
+            "currentPage": 3,
+            "currentItems": getCurrentItems(),
+            "totalPages": 5,
+            "totalItems": 10,
+            "links": {
+                "first": {
+                    "page": 1,
+                    "href": "http://host/items/?start=1&limit=2"
+                },
+                "last": {
+                    "page": 5,
+                    "href": "http://host/items/?start=9&limit=2"
+                },
+                "previous": {
+                    "page": 2,
+                    "href": "http://host/items/?start=3&limit=2"
+                },
+                "next": {
+                    "page": 4,
+                    "href": "http://host/items/?start=7&limit=2"
+                }
+            }
+        }
+
+    } catch (err) {
+
+    }
+
+}
 
 // Export Module
 module.exports = router
