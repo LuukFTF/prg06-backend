@@ -43,7 +43,12 @@ router
         let totalItems = await Song.countDocuments();  
 
         console.log("total items:" + totalItems, "start:" + start, "limit:" + limit)
+        console.log(generatePagination(totalItems, start, limit))
 
+        songsCollection = {
+            ...songsCollection,
+            "pagination": generatePagination(totalItems, start, limit)
+        }
 
         res.status(200).json(songsCollection)
     } catch (err) {
@@ -387,11 +392,8 @@ function getPageNumber(totalItems, start, limit, itemNumber) {
 }
 
 
-function generatePagination(start, limit, totalItems = getTotalItems()) {
+function generatePagination(totalItems, start, limit) {
     try {
-        start = 5
-        limit = 2
-
         let pagination = {
             "currentPage": getCurrentPage(totalItems, start, limit),
             "currentItems": limit,
