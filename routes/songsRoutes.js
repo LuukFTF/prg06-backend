@@ -16,6 +16,11 @@ router
     res.header("Access-Control-Allow-Methods", "*");
     res.header("Access-Control-Allow-Methods", "Origin, Content-Type, Accept");
     res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
+
+    console.log("------------------------------------------------")
+    console.log(req.method);
+    console.log(req.query);
+
     next()
 })
 
@@ -318,13 +323,6 @@ async function getSongANDaddLinksToSong(req, res, next) {
 
 
 // Pagination Functions
-function getTotalItems() {
-    let totalItems
-    
-    totalItems = 10
-
-    return totalItems
-}
 
 function getTotalPages(totalItems, start, limit) {
     let totalPages
@@ -345,7 +343,7 @@ function getCurrentPage(totalItems, start, limit) {
         currentPage = 1
     }
 
-    currentPage = 3
+    currentPage = start / limit
 
     return currentPage
 }
