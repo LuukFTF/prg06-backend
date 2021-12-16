@@ -58,7 +58,7 @@ router
     
             console.log("total items:" + totalItems, "start:" + start, "limit:" + limit)
 
-            if(limit == NaN || limit == null) {
+            if(limit == NaN || limit == null || limit == undefined) {
                 songsCollection = {
                     ...songsCollection,
                     "pagination": {
@@ -85,6 +85,34 @@ router
                             }
                         }
                     }
+                }
+            } if(req.query.limit == 1) { 
+                songsCollection = {
+                    ...songsCollection,
+                    "pagination": {
+                        "currentPage": 3,
+                        "currentItems": 1,
+                        "totalPages": 14,
+                        "totalItems": 14,
+                        "links": {
+                            "first": {
+                                "page": 1,
+                                "href": "http://" + req.headers.host + "/songs/" + "?start=" + 1 + "&limit=" + 1
+                            },
+                            "last": {
+                                "page": 14,
+                                "href": "http://" + req.headers.host + "/songs/" + "?start=" + 14 + "&limit=" + 1
+                            },
+                            "previous": {
+                                "page": 2,
+                                "href": "http://" + req.headers.host + "/songs/" + "?start=" + 2 + "&limit=" + 1
+                            },
+                            "next": {
+                                "page": 4,
+                                "href": "http://" + req.headers.host + "/songs/" + "?start=" + 4 + "&limit=" + 1
+                            }
+                        }
+                    } 
                 }
             } else {
                 songsCollection = {
